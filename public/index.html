@@ -5,29 +5,95 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Tailwind CSS Skeleton</title>
+  <title>Book Review Card Generator</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
   <meta name="author" content="">
 
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
   <link href="style.css" rel="stylesheet">
-  <!--Replace with your tailwind.css once created-->
-  <link href="https://unpkg.com/@tailwindcss/custom-forms/dist/custom-forms.min.css" rel="stylesheet">
-  <!--Tailwind Custom Forms - use to standardise form fields - https://github.com/tailwindcss/custom-forms-->
 
 </head>
 
 <body class="bg-grey-100 font-sans leading-normal tracking-normal">
-
+  
   <div class="container mx-auto">
-    <h1 class="text-2xl font-bold text-indigo-500">Hello World</h1>
+    
+    <div class="mx-w-full bg-indigo-600">
+      <h1 class="text-2xl font-bold text-center text-pink-200 py-4">Book Review Card Generator</h1>
+    </div>
 
-    <label class="block">
-      <span class="text-gray-700">Title</span>
-      <input class="form-input mt-1 block w-full" placeholder="Oliver Twist">
-    </label>
+    <div class="flex mb-4" x-data="card()">
+
+      <div class="w-1/2 p-2">
+        <form @submit.prevent="newCard()">
+          <div>
+            <label>
+              <span>Title</span>
+              <input class="form-input mt-1 block w-full" placeholder="Oliver Twist" x-model="title">
+            </label>
+            <div></div>
+          </div>
+
+          <label>
+            <span>Author</span>
+            <input class="form-input mt-1 block w-full" placeholder="Charles Dickens" x-model="author">
+          </label>
+
+          <label class="w-1/2">
+            <span>Genre 1</span>
+
+            <select
+              class="form-select mt-1 block w-full" x-model="genre1">
+              <template x-for="eachgenre in genres">
+                <option x-text="eachgenre" :value="eachgenre"></option>
+              </template>
+            </select>
+
+          </label>
+
+          <label class="w-1/2">
+            <span>Genre 2</span>
+
+            <select
+              class="form-select mt-1 block w-full" x-model="genre2">
+              <template x-for="eachgenre in genres">
+                <option x-text="eachgenre" :value="eachgenre"></option>
+              </template>
+            </select>
+
+          </label>
+          <label>
+            <span>Rating</span>
+
+            <select
+              class="form-select mt-1 block w-full material-icons text-yellow-500"
+              x-model="rating">
+              <template x-for="(star, index) in stars" :key="index">
+                <option x-text="star" :value="index + 1"></option>
+              </template>
+            </select>
+          </label>
+
+          <button type="submit" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white mt-4 py-2 px-4 border border-blue-500 hover:border-transparent">
+            Generate Card
+          </button>
+        </form>
+      </div>
+
+      <div class="w-1/2 p-2">
+        <canvas id="cardCanvas" width="540px" height="540px">
+        </canvas>
+      </div>
+
+    </div>
+
   </div>
 
 </body>
+
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script src="script.js"></script>
 
 </html>

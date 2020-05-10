@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "postcss style.css -o public/style.css",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -19,14 +19,12 @@
   },
   "homepage": "https://github.com/meowyam/bookreviewcard#readme",
   "dependencies": {
-    "alpinejs": "^2.3.3",
     "autoprefixer": "^9.7.6",
     "fastify": "^2.14.0",
     "fastify-static": "^2.7.0",
     "pikaday": "^1.8.0",
     "postcss-cli": "^7.1.1",
-    "tailwindcss": "^1.4.5",
-    "uglify-js": "^3.9.2"
+    "tailwindcss": "^1.4.5"
   },
   "devDependencies": {
     "@tailwindcss/custom-forms": "^0.2.1"

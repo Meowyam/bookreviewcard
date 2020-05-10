@@ -19299,6 +19299,30 @@ video {
   transition-delay: 1000ms;
 }
 
+label {
+  display: block;
+  padding-top: 0.5rem;
+}
+
+label span {
+  --text-opacity: 1;
+  color: #4c51bf;
+  color: rgba(76, 81, 191, var(--text-opacity));
+  font-weight: 600;
+}
+
+label select {
+  margin-top: 0.25rem;
+  display: block;
+  width: 100%;
+}
+
+.hasStar {
+  --text-opacity: 1;
+  color: #ecc94b;
+  color: rgba(236, 201, 75, var(--text-opacity));
+}
+
 @media (min-width: 640px) {
   .sm\:space-y-0 > :not(template) ~ :not(template) {
     --space-y-reverse: 0;
