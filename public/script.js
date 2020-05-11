@@ -16,19 +16,59 @@ function strokeStar(x, y, r, n, inset, ctx) {
     ctx.restore();
 }
 
+const c = document.getElementById("cardCanvas")
+const ctx = c.getContext("2d")
 
-function generateCard(cardInfo) {
+function initCard(ctx) {
+  ctx.beginPath()
+  ctx.rect(0,0,540,540)
+  ctx.fillStyle = '#f2e7a0'
+  ctx.fill()
+  ctx.rect(5,5,530,530)
+  ctx.strokeStyle = '#214063'
+  ctx.stroke()
+  ctx.fillStyle = '#1c2024'
+  ctx.font = '30px Playfair Display SC'
+  ctx.textAlign = 'center'
+  ctx.fillText('Library Card',267,50)
+  ctx.strokeStyle = '#214063'
+
+  ctx.beginPath()
+  ctx.moveTo(5,77)
+  ctx.lineTo(535,77)
+  ctx.moveTo(5,80)
+  ctx.lineTo(535,80)
+
+  ctx.moveTo(5,140)
+  ctx.lineTo(535,140)
+
+  ctx.moveTo(5,200)
+  ctx.lineTo(535,200)
+
+  for (y=203; y < 530; y+=50) {
+    ctx.moveTo(5, y)
+    ctx.lineTo(535, y)
+  }
+
+  ctx.moveTo(150,203)
+  ctx.lineTo(150,535)
+
+  ctx.stroke()
+
+  ctx.font = '12px Montserrat'
+  ctx.textAlign = 'left'
+  ctx.fillStyle = '#214063'
+  ctx.fillText('AUTHOR',10,93)
+  ctx.fillText('TITLE',10,153)
+  ctx.fillText('DATES',55,216)
+}
+initCard(ctx)
+
+function generateCard(cardInfo, ctx) {
 
   console.log(cardInfo)
-
-  const c = document.getElementById("cardCanvas")
-  const ctx = c.getContext("2d")
-  ctx.beginPath()
-  ctx.rect(0,0,1080,1080)
-  ctx.fillStyle = '#d7b666'
-  ctx.fill()
   ctx.fillStyle = '#000'
-  ctx.font = "30px Arial"
+  ctx.font = '30px Arial'
   ctx.fillText(cardInfo.title, 10, 50)
   ctx.fillText(cardInfo.author, 10, 100)
   ctx.fillText(cardInfo.genre1, 10, 200)
@@ -36,7 +76,7 @@ function generateCard(cardInfo) {
   let i = 0
   let x = 20
   if (i == 0) {
-    ctx.fillText('No rating', 10, 300)
+    ctx.fillText('', 10, 300)
   } else {
     do {
       i += 1
@@ -108,6 +148,14 @@ function card() {
       'star star star star star'
     ],
 
+    startDate: new Pikaday({
+      field: document.getElementById('startDate')
+    }),
+
+    endDate: new Pikaday({
+      field: document.getElementById('endDate')
+    }),
+
     card: [
       {
         title: '',
@@ -131,7 +179,7 @@ function card() {
         endDate: this.endDate,
         isComplete: this.isComplete,
       }
-      generateCard(card)
+      generateCard(card, ctx)
     }
   }
 }

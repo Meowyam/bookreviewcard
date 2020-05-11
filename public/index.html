@@ -12,6 +12,8 @@
 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat|Playfair+Display|Playfair+Display+SC&display=swap" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
 
 </head>
@@ -29,50 +31,79 @@
       <div class="w-1/2 p-2">
         <form @submit.prevent="newCard()">
           <div>
-            <label>
+            <label class="block">
               <span>Title</span>
               <input class="form-input mt-1 block w-full" placeholder="Oliver Twist" x-model="title">
             </label>
             <div></div>
           </div>
 
-          <label>
+          <label class="block">
             <span>Author</span>
             <input class="form-input mt-1 block w-full" placeholder="Charles Dickens" x-model="author">
           </label>
 
-          <label class="w-1/2">
-            <span>Genre 1</span>
+          <div class="flex">
+            <div class="w-1/2">
+              <label class="block w-full">
+                <span>Genre 1</span>
 
-            <select
-              class="form-select mt-1 block w-full" x-model="genre1">
-              <template x-for="eachgenre in genres">
-                <option x-text="eachgenre" :value="eachgenre"></option>
-              </template>
-            </select>
+                <select
+                  class="form-select mt-1 mx-auto block w-full" x-model="genre1">
+                  <template x-for="eachgenre in genres">
+                    <option x-text="eachgenre" :value="eachgenre"></option>
+                  </template>
+                </select>
 
-          </label>
+              </label>
+            </div>
 
-          <label class="w-1/2">
-            <span>Genre 2</span>
+            <div class="w-1/2">
+              <label class="block w-full">
+                <span>Genre 2</span>
 
-            <select
-              class="form-select mt-1 block w-full" x-model="genre2">
-              <template x-for="eachgenre in genres">
-                <option x-text="eachgenre" :value="eachgenre"></option>
-              </template>
-            </select>
+                <select
+                  class="form-select mt-1 mx-auto block w-full" x-model="genre2">
+                  <template x-for="eachgenre in genres">
+                    <option x-text="eachgenre" :value="eachgenre"></option>
+                  </template>
+                </select>
 
-          </label>
-          <label>
+              </label>
+            </div>
+          </div>
+
+          <label class="block">
             <span>Rating</span>
 
             <select
-              class="form-select mt-1 block w-full material-icons text-yellow-500"
+              class="form-select mt-1 block material-icons text-yellow-500"
               x-model="rating">
               <template x-for="(star, index) in stars" :key="index">
                 <option x-text="star" :value="index"></option>
               </template>
+            </select>
+          </label>
+
+          <div class="flex">
+            <label class="w-1/2">
+              <span>Start Date</span>
+              <input class="form-input mt-1 block w-full" type="text" id="startDate" x-model="startDate">
+            </label>
+
+            <label class="w-1/2">
+              <span>End Date</span>
+              <input class="form-input mt-1 block w-full" type="text" id="endDate" x-model="endDate">
+            </label>
+          </div>
+
+          <label class="w-full block">
+            <span>Completed?</span>
+            <select
+              class="form-select mt-1 block"
+              x-model="isComplete">
+                <option value="true">Completed</option>
+                <option value="false">Did Not Finish</option>
             </select>
           </label>
 
@@ -94,6 +125,7 @@
 </body>
 
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
 <script src="script.js"></script>
 
 </html>

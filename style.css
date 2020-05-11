@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 label {
-  @apply block pt-2;
+  @apply pt-2;
 }
 
 label span {
@@ -11,7 +11,7 @@ label span {
 }
 
 label select {
-  @apply mt-1 block w-full;
+  @apply mt-1;
 }
 
 .hasStar {

@@ -19300,7 +19300,6 @@ video {
 }
 
 label {
-  display: block;
   padding-top: 0.5rem;
 }
 
@@ -19313,8 +19312,6 @@ label span {
 
 label select {
   margin-top: 0.25rem;
-  display: block;
-  width: 100%;
 }
 
 .hasStar {
