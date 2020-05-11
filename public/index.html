@@ -13,7 +13,8 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
-<link href="https://fonts.googleapis.com/css?family=Montserrat|Playfair+Display|Playfair+Display+SC&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat|Playfair+Display|Playfair+Display+SC&display=swap" rel="stylesheet">
+
   <link href="style.css" rel="stylesheet">
 
 </head>
@@ -102,8 +103,9 @@
             <select
               class="form-select mt-1 block"
               x-model="isComplete">
-                <option value="true">Completed</option>
-                <option value="false">Did Not Finish</option>
+                <option></option>
+                <option :value="true">Completed</option>
+                <option :value="false">Did Not Finish</option>
             </select>
           </label>
 

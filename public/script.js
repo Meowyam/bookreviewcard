@@ -1,21 +1,5 @@
 console.log("hello");
 
-function strokeStar(x, y, r, n, inset, ctx) {
-    ctx.save();
-    ctx.beginPath();
-    ctx.translate(x, y);
-    ctx.moveTo(0,0-r);
-    for (var i = 0; i < n; i++) {
-        ctx.rotate(Math.PI / n);
-        ctx.lineTo(0, 0 - (r*inset));
-        ctx.rotate(Math.PI / n);
-        ctx.lineTo(0, 0 - r);
-    }
-    ctx.closePath();
-    ctx.fill();
-    ctx.restore();
-}
-
 const c = document.getElementById("cardCanvas")
 const ctx = c.getContext("2d")
 
@@ -64,26 +48,65 @@ function initCard(ctx) {
 }
 initCard(ctx)
 
+function dataSplit(data,y1,y2,y3) {
+  if (data.length > 60) {
+    ctx.font = '14px Playfair Display'
+    let splitArray = data.match(/.{1,60}(\s|$)/g)
+    ctx.fillText(splitArray[0],270,y1)
+    ctx.fillText(splitArray[1],270,y2)
+  } else {
+    ctx.font = '18px Playfair Display'
+    ctx.fillText(data,270,y3)
+  }
+}
+
+function dateSplit(bookDate,x,y1,y2) {
+  let dateArray = []
+  dateArray[0] = bookDate.toString().substr(0,4)
+  dateArray[1] = bookDate.toString().substr(4)
+  ctx.textAlign = 'left'
+  ctx.fillText(dateArray[0],x,y1)
+  ctx.fillText(dateArray[1],x,y2)
+}
+
 function generateCard(cardInfo, ctx) {
 
-  console.log(cardInfo)
-  ctx.fillStyle = '#000'
-  ctx.font = '30px Arial'
-  ctx.fillText(cardInfo.title, 10, 50)
-  ctx.fillText(cardInfo.author, 10, 100)
-  ctx.fillText(cardInfo.genre1, 10, 200)
-  ctx.fillText(cardInfo.genre2, 100, 200)
-  let i = 0
-  let x = 20
-  if (i == 0) {
-    ctx.fillText('', 10, 300)
+  ctx.fillStyle = '#1c2024'
+  dateSplit(cardInfo.startDate,30,235,250)
+  dateSplit(cardInfo.endDate,30,275,290)
+  ctx.font = '18px Playfair Display'
+  ctx.textAlign = 'center'
+  dataSplit(cardInfo.title,160,190,180)
+  dataSplit(cardInfo.author,100,130,120)
+  ctx.fillText(cardInfo.genre1,330,250)
+  ctx.fillText(cardInfo.genre2,330,300)
+
+  ctx.fillStyle = '#dc143c'
+  ctx.font = '20px Playfair Display'
+
+  if (cardInfo.isComplete == 'true') {
+    ctx.fillText('Completed!',330,480)
+  } else if (cardInfo.isComplete == 'false') {
+    ctx.fillText('Did Not Finish',330,480)
   } else {
-    do {
-      i += 1
-      x += 20
-      strokeStar(x, 300, 3, 5, 3, ctx);
-    } while (i<cardInfo.rating)
+    // no info
   }
+
+  if (cardInfo.rating > 0) {
+    let i = 0
+    let x = 270
+    do {
+      console.log(i,x)
+      i++
+      x+=20
+      ctx.textAlign = 'center'
+      ctx.fillText('\u2605',x,440)
+      console.log(i,x)
+    } while (i<cardInfo.rating)
+  } else {
+    // no rating
+  }
+
 }
 
 function card() {
@@ -168,6 +191,7 @@ function card() {
         isComplete: '',
       }
     ],
+
     newCard() {
       card = {
         title: this.title,
@@ -179,6 +203,7 @@ function card() {
         endDate: this.endDate,
         isComplete: this.isComplete,
       }
+      console.log(card)
       generateCard(card, ctx)
     }
   }
