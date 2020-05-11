@@ -71,7 +71,7 @@
               class="form-select mt-1 block w-full material-icons text-yellow-500"
               x-model="rating">
               <template x-for="(star, index) in stars" :key="index">
-                <option x-text="star" :value="index + 1"></option>
+                <option x-text="star" :value="index"></option>
               </template>
             </select>
           </label>
