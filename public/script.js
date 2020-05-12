@@ -4,6 +4,8 @@ const c = document.getElementById("cardCanvas")
 const ctx = c.getContext("2d")
 
 function initCard(ctx) {
+  ctx.setTransform(1,0,0,1,0,0)
+  ctx.clearRect(0,0,540,540)
   ctx.beginPath()
   ctx.rect(0,0,540,540)
   ctx.fillStyle = '#f2e7a0'
@@ -69,7 +71,8 @@ function dateSplit(bookDate,x,y1,y2) {
   ctx.fillText(dateArray[1],x,y2)
 }
 
-function generateCard(cardInfo, ctx) {
+function generateCard(cardInfo,ctx) {
+  initCard(ctx)
 
   ctx.fillStyle = '#1c2024'
   dateSplit(cardInfo.startDate,30,235,250)
@@ -96,12 +99,10 @@ function generateCard(cardInfo, ctx) {
     let i = 0
     let x = 270
     do {
-      console.log(i,x)
       i++
       x+=20
       ctx.textAlign = 'center'
       ctx.fillText('\u2605',x,440)
-      console.log(i,x)
     } while (i<cardInfo.rating)
   } else {
     // no rating
@@ -193,6 +194,25 @@ function card() {
     ],
 
     newCard() {
+      newVal = [
+        this.title,
+        this.author,
+        this.genre1,
+        this.genre2,
+        this.rating,
+        this.startDate,
+        this.endDate,
+        this.isComplete
+      ]
+
+      newVal.forEach(function(value, i){
+        if (card[i] !== '' || card[i] !== value) {
+          card[i] = value
+        } else {
+          card[i]
+        }
+      })
+
       card = {
         title: this.title,
         author: this.author,
@@ -203,7 +223,6 @@ function card() {
         endDate: this.endDate,
         isComplete: this.isComplete,
       }
-      console.log(card)
       generateCard(card, ctx)
     }
   }
