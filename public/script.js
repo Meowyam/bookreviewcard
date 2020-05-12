@@ -1,64 +1,95 @@
 console.log("hello");
 
+let screenw = window.innerWidth
+let size = 'sm'
+let shrink
+if (screenw > 1023) {
+  size = 'lg'
+  shrink = 1
+} else if (1024 > screenw && screenw > 767){
+  size = 'md'
+  shrink = 0.75
+} else if (768 > screenw) {
+  shrink = 0.6
+}
+console.log(size)
+
 const c = document.getElementById("cardCanvas")
 const ctx = c.getContext("2d")
 
-function initCard(ctx) {
+function initCard(ctx,size) {
+  console.log(size)
   ctx.setTransform(1,0,0,1,0,0)
-  ctx.clearRect(0,0,540,540)
+  ctx.clearRect(0,0,540*shrink,540*shrink)
   ctx.beginPath()
-  ctx.rect(0,0,540,540)
+  ctx.rect(0,0,540*shrink,540*shrink)
   ctx.fillStyle = '#f2e7a0'
   ctx.fill()
-  ctx.rect(5,5,530,530)
+  ctx.rect(5*shrink,5*shrink,530*shrink,530*shrink)
   ctx.strokeStyle = '#214063'
   ctx.stroke()
   ctx.fillStyle = '#1c2024'
-  ctx.font = '30px Playfair Display SC'
+  if (size == 'lg') {
+    ctx.font = '30px Playfair Display SC'
+  } else {
+    ctx.font = '20px Playfair Display SC'
+  }
   ctx.textAlign = 'center'
-  ctx.fillText('Library Card',267,50)
+  ctx.fillText('Library Card',267*shrink,50*shrink)
   ctx.strokeStyle = '#214063'
 
   ctx.beginPath()
-  ctx.moveTo(5,77)
-  ctx.lineTo(535,77)
-  ctx.moveTo(5,80)
-  ctx.lineTo(535,80)
+  ctx.moveTo(5*shrink,77*shrink)
+  ctx.lineTo(535*shrink,77*shrink)
+  ctx.moveTo(5*shrink,80*shrink)
+  ctx.lineTo(535*shrink,80*shrink)
 
-  ctx.moveTo(5,140)
-  ctx.lineTo(535,140)
+  ctx.moveTo(5*shrink,140*shrink)
+  ctx.lineTo(535*shrink,140*shrink)
 
-  ctx.moveTo(5,200)
-  ctx.lineTo(535,200)
+  ctx.moveTo(5*shrink,200*shrink)
+  ctx.lineTo(535*shrink,200*shrink)
 
-  for (y=203; y < 530; y+=50) {
-    ctx.moveTo(5, y)
-    ctx.lineTo(535, y)
+  for (y=203*shrink; y < 530*shrink; y+=50*shrink) {
+    ctx.moveTo(5*shrink, y)
+    ctx.lineTo(535*shrink, y)
   }
 
-  ctx.moveTo(150,203)
-  ctx.lineTo(150,535)
+  ctx.moveTo(150*shrink,203*shrink)
+  ctx.lineTo(150*shrink,535*shrink)
 
   ctx.stroke()
 
-  ctx.font = '12px Montserrat'
+  if (size == 'lg') {
+    ctx.font = '12px Montserrat'
+  } else {
+    ctx.font = '8px Montserrat'
+  }
   ctx.textAlign = 'left'
   ctx.fillStyle = '#214063'
-  ctx.fillText('AUTHOR',10,93)
-  ctx.fillText('TITLE',10,153)
-  ctx.fillText('DATES',55,216)
+  ctx.fillText('AUTHOR',10*shrink,93*shrink)
+  ctx.fillText('TITLE',10*shrink,153*shrink)
+  ctx.fillText('DATES',55*shrink,216*shrink)
 }
-initCard(ctx)
+initCard(ctx,size)
 
 function dataSplit(data,y1,y2,y3) {
   if (data.length > 60) {
-    ctx.font = '14px Playfair Display'
+    if (size == 'lg') {
+      ctx.font = '14px Playfair Display'
+    } else {
+      ctx.font = '10px Playfair Display'
+    }
     let splitArray = data.match(/.{1,60}(\s|$)/g)
-    ctx.fillText(splitArray[0],270,y1)
-    ctx.fillText(splitArray[1],270,y2)
+    ctx.fillText(splitArray[0],270*shrink,y1)
+    ctx.fillText(splitArray[1],270*shrink,y2)
   } else {
-    ctx.font = '18px Playfair Display'
-    ctx.fillText(data,270,y3)
+    if (size == 'lg') {
+      ctx.font = '18px Playfair Display'
+    } else {
+      ctx.font = '14px Playfair Display'
+    }
+    ctx.fillText(data,270*shrink,y3)
   }
 }
 
@@ -71,38 +102,46 @@ function dateSplit(bookDate,x,y1,y2) {
   ctx.fillText(dateArray[1],x,y2)
 }
 
-function generateCard(cardInfo,ctx) {
-  initCard(ctx)
+function generateCard(cardInfo,ctx,size) {
+  initCard(ctx,size)
 
   ctx.fillStyle = '#1c2024'
-  dateSplit(cardInfo.startDate,30,235,250)
-  dateSplit(cardInfo.endDate,30,275,290)
-  ctx.font = '18px Playfair Display'
+  dateSplit(cardInfo.startDate,30*shrink,235*shrink,250*shrink)
+  dateSplit(cardInfo.endDate,30*shrink,275*shrink,290*shrink)
+  if (size == 'lg') {
+    ctx.font = '18px Playfair Display'
+  } else {
+    ctx.font = '16px Playfair Display'
+  }
   ctx.textAlign = 'center'
-  dataSplit(cardInfo.title,160,190,180)
-  dataSplit(cardInfo.author,100,130,120)
-  ctx.fillText(cardInfo.genre1,330,250)
-  ctx.fillText(cardInfo.genre2,330,300)
+  dataSplit(cardInfo.title,160*shrink,190*shrink,180*shrink)
+  dataSplit(cardInfo.author,100*shrink,130*shrink,120*shrink)
+  ctx.fillText(cardInfo.genre1,330*shrink,250*shrink)
+  ctx.fillText(cardInfo.genre2,330*shrink,300*shrink)
 
   ctx.fillStyle = '#dc143c'
-  ctx.font = '20px Playfair Display'
+  if (size == 'lg') {
+    ctx.font = '20px Playfair Display'
+  } else {
+    ctx.font = '15px Playfair Display'
+  }
 
   if (cardInfo.isComplete == 'true') {
-    ctx.fillText('Completed!',330,480)
+    ctx.fillText('Completed!',330*shrink,480*shrink)
   } else if (cardInfo.isComplete == 'false') {
-    ctx.fillText('Did Not Finish',330,480)
+    ctx.fillText('Did Not Finish',330*shrink,480*shrink)
   } else {
     // no info
   }
 
   if (cardInfo.rating > 0) {
     let i = 0
-    let x = 270
+    let x = 270*shrink
     do {
       i++
-      x+=20
+      x+=20*shrink
       ctx.textAlign = 'center'
-      ctx.fillText('\u2605',x,440)
+      ctx.fillText('\u2605',x,440*shrink)
     } while (i<cardInfo.rating)
   } else {
     // no rating
@@ -223,7 +262,7 @@ function card() {
         endDate: this.endDate,
         isComplete: this.isComplete,
       }
-      generateCard(card, ctx)
+      generateCard(card, ctx, size)
     }
   }
 }

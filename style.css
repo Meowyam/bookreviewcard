@@ -13,7 +13,3 @@ label span {
 label select {
   @apply mt-1;
 }
-
-.hasStar {
-  @apply text-yellow-500;
-}
