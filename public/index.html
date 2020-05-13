@@ -110,8 +110,16 @@
       </div>
 
       <div class="w-full lg:w-1/2 p-2">
-        <canvas id="cardCanvas" width="540px" height="540px">
+        <canvas id="cardCanvas" width="1080" height="1080">
         </canvas>
+        <div class="w-full lg:mt-4 mt-2 mx-auto">
+          <a id="download" download="reviewCard.png">
+            <button @click="getCardImage()"
+              class="bg-transparent hover:bg-blue-800 text-blue-800 font-semibold hover:text-white py-2 px-4 border border-blue-800 hover:border-transparent">
+              Save Image
+            </button>
+          </a>
+        </div>
       </div>
 
     </div>

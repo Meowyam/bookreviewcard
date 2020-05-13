@@ -19,101 +19,77 @@ function loadCard() {
 }
 loadCard()
 let cardData = loadCard()
-console.log(cardData)
-
-let screenw = window.innerWidth
-let size = 'sm'
-let shrink
-if (screenw > 1023) {
-  size = 'lg'
-  shrink = 1
-} else if (1024 > screenw && screenw > 767){
-  size = 'md'
-  shrink = 0.75
-} else if (768 > screenw) {
-  shrink = 0.6
-}
 
 const c = document.getElementById("cardCanvas")
+
 const ctx = c.getContext("2d")
 
-function initCard(ctx,size) {
+function getCardImage() {
+  const reviewCard = c.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream")
+  document.getElementById("download").setAttribute("href", reviewCard)
+}
+
+function initCard(ctx) {
   ctx.setTransform(1,0,0,1,0,0)
-  ctx.clearRect(0,0,540*shrink,540*shrink)
+  ctx.clearRect(0,0,1080,1080)
   ctx.beginPath()
-  ctx.rect(0,0,540*shrink,540*shrink)
+  ctx.rect(0,0,1080,1080)
   ctx.fillStyle = '#f2e7a0'
   ctx.fill()
-  ctx.rect(5*shrink,5*shrink,530*shrink,530*shrink)
+  ctx.rect(10,10,1060,1060)
   ctx.strokeStyle = '#214063'
   ctx.stroke()
   ctx.fillStyle = '#1c2024'
-  if (size == 'lg') {
-    ctx.font = '30px Playfair Display SC'
-  } else {
-    ctx.font = '20px Playfair Display SC'
-  }
+  ctx.font = '60px Playfair Display SC'
   ctx.textAlign = 'center'
-  ctx.fillText('Library Card',267*shrink,50*shrink)
+  ctx.fillText('Library Card',534,100)
   ctx.strokeStyle = '#214063'
 
   ctx.beginPath()
-  ctx.moveTo(5*shrink,77*shrink)
-  ctx.lineTo(535*shrink,77*shrink)
-  ctx.moveTo(5*shrink,80*shrink)
-  ctx.lineTo(535*shrink,80*shrink)
+  ctx.moveTo(10,154)
+  ctx.lineTo(1070,154)
+  ctx.moveTo(10,160)
+  ctx.lineTo(1070,160)
 
-  ctx.moveTo(5*shrink,140*shrink)
-  ctx.lineTo(535*shrink,140*shrink)
+  ctx.moveTo(10,280)
+  ctx.lineTo(1070,280)
 
-  ctx.moveTo(5*shrink,200*shrink)
-  ctx.lineTo(535*shrink,200*shrink)
+  ctx.moveTo(10,400)
+  ctx.lineTo(1070,400)
 
-  for (y=203*shrink; y < 530*shrink; y+=50*shrink) {
-    ctx.moveTo(5*shrink, y)
-    ctx.lineTo(535*shrink, y)
+  for (y=406; y < 1060; y+=100) {
+    ctx.moveTo(10, y)
+    ctx.lineTo(1070, y)
   }
 
-  ctx.moveTo(150*shrink,203*shrink)
-  ctx.lineTo(150*shrink,535*shrink)
+  ctx.moveTo(300,406)
+  ctx.lineTo(300,1070)
 
   ctx.stroke()
 
-  if (size == 'lg') {
-    ctx.font = '12px Montserrat'
-  } else {
-    ctx.font = '8px Montserrat'
-  }
+  ctx.font = '24px Montserrat'
   ctx.textAlign = 'left'
   ctx.fillStyle = '#214063'
-  ctx.fillText('AUTHOR',10*shrink,93*shrink)
-  ctx.fillText('TITLE',10*shrink,153*shrink)
-  ctx.fillText('DATES',55*shrink,216*shrink)
+  ctx.fillText('AUTHOR',20,186)
+  ctx.fillText('TITLE',20,306)
+  ctx.fillText('DATES',110,432)
 }
 if (sessionStorage.length !== 0) {
-  initCard(ctx,size)
-  generateCard(cardData,ctx,size)
+  initCard(ctx)
+  generateCard(cardData,ctx)
 } else {
-  initCard(ctx,size)
+  initCard(ctx)
 }
 
 function dataSplit(data,y1,y2,y3) {
   if (data && data.length > 60) {
-    if (size == 'lg') {
-      ctx.font = '14px Playfair Display'
-    } else {
-      ctx.font = '12px Playfair Display'
-    }
+    ctx.font = '30px Playfair Display'
     let splitArray = data.match(/.{1,60}(\s|$)/g)
-    ctx.fillText(splitArray[0],270*shrink,y1)
-    ctx.fillText(splitArray[1],270*shrink,y2)
+    ctx.fillText(splitArray[0],540,y1)
+    ctx.fillText(splitArray[1],540,y2)
   } else {
-    if (size == 'lg') {
-      ctx.font = '18px Playfair Display'
-    } else {
-      ctx.font = '14px Playfair Display'
-    }
-    ctx.fillText(data,270*shrink,y3)
+    ctx.font = '40px Playfair Display'
+    ctx.fillText(data,540,y3)
   }
 }
 
@@ -181,35 +157,25 @@ let allGenres = [
   'Short stories'
 ]
 
-function generateCard(cardInfo,ctx,size) {
-  console.log(cardInfo)
-  initCard(ctx,size)
+function generateCard(cardInfo,ctx) {
+  initCard(ctx)
 
   ctx.fillStyle = '#1c2024'
-  dateSplit(cardInfo.startDate,30*shrink,275*shrink,290*shrink)
-  dateSplit(cardInfo.endDate,30*shrink,325*shrink,340*shrink)
-  if (size == 'lg') {
-    ctx.font = '18px Playfair Display'
-  } else {
-    ctx.font = '16px Playfair Display'
-  }
+  dateSplit(cardInfo.startDate,60,550,580)
+  dateSplit(cardInfo.endDate,60,650,680)
+  ctx.font = '40px Playfair Display'
   ctx.textAlign = 'center'
-  dataSplit(cardInfo.title,160*shrink,190*shrink,180*shrink)
-  dataSplit(cardInfo.author,100*shrink,130*shrink,120*shrink)
-  ctx.fillText(cardInfo.genre1,330*shrink,285*shrink)
-  ctx.fillText(cardInfo.genre2,330*shrink,335*shrink)
+  dataSplit(cardInfo.title,320,380,360)
+  dataSplit(cardInfo.author,200,260,240)
+  ctx.fillText(cardInfo.genre1,660,570)
+  ctx.fillText(cardInfo.genre2,660,670)
 
   ctx.fillStyle = '#dc143c'
-  if (size == 'lg') {
-    ctx.font = '20px Playfair Display'
-  } else {
-    ctx.font = '15px Playfair Display'
-  }
 
   if (cardInfo.isComplete == 'true') {
-    ctx.fillText('Completed!',330*shrink,480*shrink)
+    ctx.fillText('Completed!',660,960)
   } else if (cardInfo.isComplete == 'false') {
-    ctx.fillText('Did Not Finish',330*shrink,480*shrink)
+    ctx.fillText('Did Not Finish',660,960)
   } else {
     // no info
   }
@@ -218,13 +184,12 @@ function generateCard(cardInfo,ctx,size) {
 
   if (cardInfo.rating > 0) {
     let i = 0
-    let xo = 320-((cardInfo.rating/2)*20)
-    let x = xo*shrink
+    let xo = 640-((cardInfo.rating/2)*40)
+    let x = xo
     do {
       i++
-      x+=20*shrink
-      console.log(x)
-      ctx.fillText('\u2605',x,430*shrink)
+      x+=40
+      ctx.fillText('\u2605',x,860)
     } while (i<cardInfo.rating)
   } else {
     // no rating
@@ -271,8 +236,6 @@ function card() {
         isComplete: this.isComplete,
       }
 
-      console.log(newVal)
-
       card = {
         title: cardData.title,
         author: cardData.author,
@@ -285,7 +248,6 @@ function card() {
       }
 
       Object.keys(newVal).forEach(function(key) {
-        console.log(card[key], newVal[key])
         if (card[key] !== '' || card[key] !== newVal[key]) {
           card[key] = newVal[key]
         } else {
@@ -293,12 +255,9 @@ function card() {
         }
       })
 
-      console.log(card)
-
       sessionStorage.setItem('card', JSON.stringify(card))
-      console.log(sessionStorage)
 
-      generateCard(card, ctx, size)
+      generateCard(card, ctx)
     }
   }
 }

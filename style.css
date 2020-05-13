@@ -13,3 +13,22 @@ label span {
 label select {
   @apply mt-1;
 }
+
+@media (min-width: 1024px) {
+  canvas {
+    width: 540px;
+    height: 540px;
+  }
+}
+
+@media (min-width: 768px, max-width: 1023px) {
+  canvas {
+    width: 405px;
+    height: 405px;
+  }
+}
+
+@media (max-width: 767px) canvas {
+  width: 304px;
+  height: 304px;
+}
