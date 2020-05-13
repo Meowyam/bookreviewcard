@@ -218,7 +218,9 @@ function card() {
       'star star star star star'
     ],
 
-    startDate: getDate('startDate'),
+    startDate: new Pikaday({
+      field: document.getElementById('startDate')
+    }),
 
     endDate: getDate('endDate'),
 

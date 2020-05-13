@@ -19317,10 +19317,10 @@ label select {
   }
 }
 
-@media (min-width: 768px, max-width: 1023px) {
+@media (min-width: 768px) and (max-width: 1023px) {
   canvas {
-    width: 405px;
-    height: 405px;
+    width: 540px;
+    height: 540px;
   }
 }
 
