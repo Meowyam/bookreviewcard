@@ -1,5 +1,26 @@
 console.log("hello");
 
+function loadCard() {
+  if (sessionStorage.length == 0) {
+    let emptyCard = {
+      title: '',
+      author: '',
+      genre1: '',
+      genre2: '',
+      rating: 0,
+      startDate: '',
+      endDate: '',
+      isComplete: '',
+    }
+    return emptyCard
+  } else {
+    return JSON.parse(sessionStorage.getItem('card'))
+  }
+}
+loadCard()
+let cardData = loadCard()
+console.log(cardData)
+
 let screenw = window.innerWidth
 let size = 'sm'
 let shrink
@@ -69,10 +90,15 @@ function initCard(ctx,size) {
   ctx.fillText('TITLE',10*shrink,153*shrink)
   ctx.fillText('DATES',55*shrink,216*shrink)
 }
-initCard(ctx,size)
+if (sessionStorage.length !== 0) {
+  initCard(ctx,size)
+  generateCard(cardData,ctx,size)
+} else {
+  initCard(ctx,size)
+}
 
 function dataSplit(data,y1,y2,y3) {
-  if (data.length > 60) {
+  if (data && data.length > 60) {
     if (size == 'lg') {
       ctx.font = '14px Playfair Display'
     } else {
@@ -91,6 +117,19 @@ function dataSplit(data,y1,y2,y3) {
   }
 }
 
+function getDate(whichDate) {
+  let dateValue = document.getElementById(whichDate).value
+  if (dateValue !== '') {
+    return new Pikaday({
+      field: document.getElementById(whichDate)
+    })
+  } else if (cardData && (cardData[whichDate] !== '')) {
+    return cardData[whichDate]
+  } else {
+    return ''
+  }
+}
+
 function dateSplit(bookDate,x,y1,y2) {
   let dateArray = []
   dateArray[0] = bookDate.toString().substr(0,4)
@@ -100,7 +139,50 @@ function dateSplit(bookDate,x,y1,y2) {
   ctx.fillText(dateArray[1],x,y2)
 }
 
+let allGenres = [
+  '',
+  'Fantasy',
+  'Scifi',
+  'Horror',
+  'Western',
+  'Romance',
+  'Thriller',
+  'Mystery',
+  'Detective',
+  'Dystopian',
+  'Adventure',
+  'Young Adult',
+  'Children',
+  'Nonfiction',
+  'Food',
+  'Paranormal',
+  'Historical',
+  'Fairy tale',
+  'Magical realism',
+  'Mythology',
+  'Classic',
+  'Political',
+  'Biography',
+  'Memoir',
+  'Self-help',
+  'Reference',
+  'Science',
+  'Journalism',
+  'Cooking',
+  'Home decor',
+  'Coffeetable',
+  'Music',
+  'Plants',
+  'Animal',
+  'Satire',
+  'Comedy',
+  'Literary',
+  'Essays',
+  'Short stories'
+]
+
 function generateCard(cardInfo,ctx,size) {
+  console.log(cardInfo)
   initCard(ctx,size)
 
   ctx.fillStyle = '#1c2024'
@@ -152,6 +234,7 @@ function generateCard(cardInfo,ctx,size) {
 
 function card() {
   return {
+
     title: '',
     author: '',
     genre1: '',
@@ -161,47 +244,7 @@ function card() {
     endDate: '',
     isComplete: '',
 
-    genres: [
-      '',
-      'Fantasy',
-      'Scifi',
-      'Horror',
-      'Western',
-      'Romance',
-      'Thriller',
-      'Mystery',
-      'Detective',
-      'Dystopian',
-      'Adventure',
-      'Young Adult',
-      'Children',
-      'Nonfiction',
-      'Food',
-      'Paranormal',
-      'Historical',
-      'Fairy tale',
-      'Magical realism',
-      'Mythology',
-      'Classic',
-      'Political',
-      'Biography',
-      'Memoir',
-      'Self-help',
-      'Reference',
-      'Science',
-      'Journalism',
-      'Cooking',
-      'Home decor',
-      'Coffeetable',
-      'Music',
-      'Plants',
-      'Animal',
-      'Satire',
-      'Comedy',
-      'Literary',
-      'Essays',
-      'Short stories'
-    ],
+    genres: allGenres.sort(),
 
     stars: [
       '',
@@ -212,48 +255,12 @@ function card() {
       'star star star star star'
     ],
 
-    startDate: new Pikaday({
-      field: document.getElementById('startDate')
-    }),
+    startDate: getDate('startDate'),
 
-    endDate: new Pikaday({
-      field: document.getElementById('endDate')
-    }),
-
-    card: [
-      {
-        title: '',
-        author: '',
-        genre1: '',
-        genre2: '',
-        rating: 0,
-        startDate: '',
-        endDate: '',
-        isComplete: '',
-      }
-    ],
+    endDate: getDate('endDate'),
 
     newCard() {
-      newVal = [
-        this.title,
-        this.author,
-        this.genre1,
-        this.genre2,
-        this.rating,
-        this.startDate,
-        this.endDate,
-        this.isComplete
-      ]
-
-      newVal.forEach(function(value, i){
-        if (card[i] !== '' || card[i] !== value) {
-          card[i] = value
-        } else {
-          card[i]
-        }
-      })
-
-      card = {
+      newVal = {
         title: this.title,
         author: this.author,
         genre1: this.genre1,
@@ -263,6 +270,34 @@ function card() {
         endDate: this.endDate,
         isComplete: this.isComplete,
       }
+
+      console.log(newVal)
+
+      card = {
+        title: cardData.title,
+        author: cardData.author,
+        genre1: cardData.genre1,
+        genre2: cardData.genre2,
+        rating: cardData.rating,
+        startDate: cardData.startDate,
+        endDate: cardData.endDate,
+        isComplete: cardData.isComplete,
+      }
+
+      Object.keys(newVal).forEach(function(key) {
+        console.log(card[key], newVal[key])
+        if (card[key] !== '' || card[key] !== newVal[key]) {
+          card[key] = newVal[key]
+        } else {
+          card[key]
+        }
+      })
+
+      console.log(card)
+
+      sessionStorage.setItem('card', JSON.stringify(card))
+      console.log(sessionStorage)
+
       generateCard(card, ctx, size)
     }
   }
