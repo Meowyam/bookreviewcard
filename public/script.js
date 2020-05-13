@@ -12,13 +12,11 @@ if (screenw > 1023) {
 } else if (768 > screenw) {
   shrink = 0.6
 }
-console.log(size)
 
 const c = document.getElementById("cardCanvas")
 const ctx = c.getContext("2d")
 
 function initCard(ctx,size) {
-  console.log(size)
   ctx.setTransform(1,0,0,1,0,0)
   ctx.clearRect(0,0,540*shrink,540*shrink)
   ctx.beginPath()
@@ -78,7 +76,7 @@ function dataSplit(data,y1,y2,y3) {
     if (size == 'lg') {
       ctx.font = '14px Playfair Display'
     } else {
-      ctx.font = '10px Playfair Display'
+      ctx.font = '12px Playfair Display'
     }
     let splitArray = data.match(/.{1,60}(\s|$)/g)
     ctx.fillText(splitArray[0],270*shrink,y1)
@@ -106,8 +104,8 @@ function generateCard(cardInfo,ctx,size) {
   initCard(ctx,size)
 
   ctx.fillStyle = '#1c2024'
-  dateSplit(cardInfo.startDate,30*shrink,235*shrink,250*shrink)
-  dateSplit(cardInfo.endDate,30*shrink,275*shrink,290*shrink)
+  dateSplit(cardInfo.startDate,30*shrink,275*shrink,290*shrink)
+  dateSplit(cardInfo.endDate,30*shrink,325*shrink,340*shrink)
   if (size == 'lg') {
     ctx.font = '18px Playfair Display'
   } else {
@@ -116,8 +114,8 @@ function generateCard(cardInfo,ctx,size) {
   ctx.textAlign = 'center'
   dataSplit(cardInfo.title,160*shrink,190*shrink,180*shrink)
   dataSplit(cardInfo.author,100*shrink,130*shrink,120*shrink)
-  ctx.fillText(cardInfo.genre1,330*shrink,250*shrink)
-  ctx.fillText(cardInfo.genre2,330*shrink,300*shrink)
+  ctx.fillText(cardInfo.genre1,330*shrink,285*shrink)
+  ctx.fillText(cardInfo.genre2,330*shrink,335*shrink)
 
   ctx.fillStyle = '#dc143c'
   if (size == 'lg') {
@@ -134,14 +132,17 @@ function generateCard(cardInfo,ctx,size) {
     // no info
   }
 
+  ctx.textAlign = 'center'
+
   if (cardInfo.rating > 0) {
     let i = 0
-    let x = 270*shrink
+    let xo = 320-((cardInfo.rating/2)*20)
+    let x = xo*shrink
     do {
       i++
       x+=20*shrink
-      ctx.textAlign = 'center'
-      ctx.fillText('\u2605',x,440*shrink)
+      console.log(x)
+      ctx.fillText('\u2605',x,430*shrink)
     } while (i<cardInfo.rating)
   } else {
     // no rating
