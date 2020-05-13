@@ -1,5 +1,3 @@
-console.log("hello");
-
 function loadCard() {
   if (sessionStorage.length == 0) {
     let emptyCard = {

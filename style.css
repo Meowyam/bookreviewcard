@@ -28,7 +28,9 @@ label select {
   }
 }
 
-@media (max-width: 767px) canvas {
-  width: 304px;
-  height: 304px;
+@media (max-width: 767px) {
+  canvas {
+    width: 304px;
+    height: 304px;
+  }
 }
