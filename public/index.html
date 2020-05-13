@@ -30,18 +30,17 @@
     <div class="w-full lg:flex mb-4" x-data="card()">
 
       <div class="w-full lg:w-1/2 p-2">
-        <form @submit.prevent="newCard()">
           <div>
             <label class="block">
               <span>Title</span>
-              <input class="form-input mt-1 block w-full" placeholder="Oliver Twist" x-model="title">
+              <input class="form-input mt-1 block w-full" placeholder="Oliver Twist" x-model="title" @change="newCard()">
             </label>
             <div></div>
           </div>
 
           <label class="block">
             <span>Author</span>
-            <input class="form-input mt-1 block w-full" placeholder="Charles Dickens" x-model="author">
+            <input class="form-input mt-1 block w-full" placeholder="Charles Dickens" x-model="author" @change="newCard()">
           </label>
 
           <div class="flex">
@@ -50,7 +49,7 @@
                 <span>Genre 1</span>
 
                 <select
-                  class="form-select mt-1 mx-auto block w-full" x-model="genre1">
+                  class="form-select mt-1 mx-auto block w-full" x-model="genre1" @change="newCard()">
                   <template x-for="eachgenre in genres">
                     <option x-text="eachgenre" :value="eachgenre"></option>
                   </template>
@@ -64,7 +63,7 @@
                 <span>Genre 2</span>
 
                 <select
-                  class="form-select mt-1 mx-auto block w-full" x-model="genre2">
+                  class="form-select mt-1 mx-auto block w-full" x-model="genre2" @change="newCard()">
                   <template x-for="eachgenre in genres">
                     <option x-text="eachgenre" :value="eachgenre"></option>
                   </template>
@@ -79,7 +78,7 @@
 
             <select
               class="form-select mt-1 block material-icons text-red-500"
-              x-model="rating">
+              x-model="rating" @change="newCard()">
               <template x-for="(star, index) in stars" :key="index">
                 <option x-text="star" :value="index"></option>
               </template>
@@ -89,12 +88,12 @@
           <div class="flex">
             <label class="w-1/2">
               <span>Start Date</span>
-              <input class="form-input mt-1 block w-full" type="text" id="startDate" x-model="startDate">
+              <input class="form-input mt-1 block w-full" type="text" id="startDate" x-model="startDate" @change="newCard()">
             </label>
 
             <label class="w-1/2">
               <span>End Date</span>
-              <input class="form-input mt-1 block w-full" type="text" id="endDate" x-model="endDate">
+              <input class="form-input mt-1 block w-full" type="text" id="endDate" x-model="endDate" @change="newCard()">
             </label>
           </div>
 
@@ -102,17 +101,12 @@
             <span>Completed?</span>
             <select
               class="form-select mt-1 block"
-              x-model="isComplete">
+              x-model="isComplete" @change="newCard()">
                 <option></option>
                 <option :value="true">Completed</option>
                 <option :value="false">Did Not Finish</option>
             </select>
           </label>
-
-          <button type="submit" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white mt-4 py-2 px-4 border border-blue-500 hover:border-transparent">
-            Generate Card
-          </button>
-        </form>
       </div>
 
       <div class="w-full lg:w-1/2 p-2">
