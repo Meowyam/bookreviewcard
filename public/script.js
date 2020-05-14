@@ -12,7 +12,7 @@ function loadCard() {
     }
     return emptyCard
   } else {
-    return JSON.parse(sessionStorage.getItem('card'))
+    return savedCard =  JSON.parse(sessionStorage.getItem('card'))
   }
 }
 loadCard()
@@ -92,16 +92,9 @@ function dataSplit(data,y1,y2,y3) {
 }
 
 function getDate(whichDate) {
-  let dateValue = document.getElementById(whichDate).value
-  if (dateValue !== '') {
-    return new Pikaday({
-      field: document.getElementById(whichDate)
-    })
-  } else if (cardData && (cardData[whichDate] !== '')) {
-    return cardData[whichDate]
-  } else {
-    return ''
-  }
+  new Pikaday({
+    field: document.getElementById(whichDate)
+  })
 }
 
 function dateSplit(bookDate,x,y1,y2) {
@@ -222,7 +215,9 @@ function card() {
       field: document.getElementById('startDate')
     }),
 
-    endDate: getDate('endDate'),
+    endDate: new Pikaday({
+      field: document.getElementById('endDate')
+    }),
 
     newCard() {
       newVal = {
@@ -231,8 +226,8 @@ function card() {
         genre1: this.genre1,
         genre2: this.genre2,
         rating: this.rating,
-        startDate: this.startDate,
-        endDate: this.endDate,
+        startDate: this.startDate.toString(),
+        endDate: this.endDate.toString(),
         isComplete: this.isComplete,
       }
 
