@@ -108,6 +108,12 @@ function dateSplit(bookDate,x,y1,y2) {
 
 let allGenres = [
   '',
+  'Philosophy',
+  'Ecology',
+  'Travel',
+  'Photography',
+  'Futurism',
+  'Cozy',
   'Fantasy',
   'Scifi',
   'Horror',
@@ -204,11 +210,11 @@ function card() {
 
     stars: [
       '',
-      'star',
-      'star star',
-      'star star star',
-      'star star star star',
-      'star star star star star'
+      '\u2605',
+      '\u2605 \u2605',
+      '\u2605 \u2605 \u2605',
+      '\u2605 \u2605 \u2605 \u2605',
+      '\u2605 \u2605 \u2605 \u2605 \u2605',
     ],
 
     startDate: new Pikaday({
