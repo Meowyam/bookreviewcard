@@ -38,10 +38,12 @@
             <div></div>
           </div>
 
-          <label class="block">
-            <span>Author</span>
-            <input class="form-input mt-1 block w-full" placeholder="Charles Dickens" x-model="author" @change="newCard()">
-          </label>
+          <div>
+            <label class="block">
+              <span>Author</span>
+              <input class="form-input mt-1 block w-full" placeholder="Charles Dickens" x-model="author" @change="newCard()">
+            </label>
+          </div>
 
           <div class="flex">
             <div class="w-1/2">
@@ -107,6 +109,13 @@
                 <option :value="false">Did Not Finish</option>
             </select>
           </label>
+
+          <div>
+            <label class="block">
+              <span>One-sentence impression</span>
+              <input class="form-input mt-1 block w-full" placeholder="It was fine." x-model="sentence" maxlength="1024" @change="newCard()">
+            </label>
+          </div>
       </div>
 
       <div class="w-full lg:w-1/2 p-2">

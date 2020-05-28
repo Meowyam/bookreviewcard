@@ -9,6 +9,7 @@ function loadCard() {
       startDate: '',
       endDate: '',
       isComplete: '',
+      sentence: '',
     }
     return emptyCard
   } else {
@@ -79,15 +80,15 @@ if (sessionStorage.length !== 0) {
   initCard(ctx)
 }
 
-function dataSplit(data,y1,y2,y3) {
+function dataSplit(data,x,y1,y2,y3) {
   if (data && data.length > 60) {
     ctx.font = '30px Playfair Display'
     let splitArray = data.match(/.{1,60}(\s|$)/g)
-    ctx.fillText(splitArray[0],540,y1)
-    ctx.fillText(splitArray[1],540,y2)
+    ctx.fillText(splitArray[0],x,y1)
+    ctx.fillText(splitArray[1],x,y2)
   } else {
     ctx.font = '40px Playfair Display'
-    ctx.fillText(data,540,y3)
+    ctx.fillText(data,x,y3)
   }
 }
 
@@ -162,17 +163,18 @@ function generateCard(cardInfo,ctx) {
   dateSplit(cardInfo.endDate,60,650,680)
   ctx.font = '40px Playfair Display'
   ctx.textAlign = 'center'
-  dataSplit(cardInfo.title,320,380,360)
-  dataSplit(cardInfo.author,200,260,240)
+  dataSplit(cardInfo.title,540,320,380,360)
+  dataSplit(cardInfo.author,540,200,260,240)
   ctx.fillText(cardInfo.genre1,660,570)
   ctx.fillText(cardInfo.genre2,660,670)
+  dataSplit(cardInfo.sentence,660,950,990,970)
 
   ctx.fillStyle = '#dc143c'
 
   if (cardInfo.isComplete == 'true') {
-    ctx.fillText('Completed!',660,960)
+    ctx.fillText('Completed!',660,870)
   } else if (cardInfo.isComplete == 'false') {
-    ctx.fillText('Did Not Finish',660,960)
+    ctx.fillText('Did Not Finish',660,870)
   } else {
     // no info
   }
@@ -186,7 +188,7 @@ function generateCard(cardInfo,ctx) {
     do {
       i++
       x+=40
-      ctx.fillText('\u2605',x,860)
+      ctx.fillText('\u2605',x,770)
     } while (i<cardInfo.rating)
   } else {
     // no rating
@@ -205,6 +207,7 @@ function card() {
     startDate: '',
     endDate: '',
     isComplete: '',
+    sentence: '',
 
     genres: allGenres.sort(),
 
@@ -235,6 +238,7 @@ function card() {
         startDate: this.startDate.toString(),
         endDate: this.endDate.toString(),
         isComplete: this.isComplete,
+        sentence: this.sentence,
       }
 
       card = {
@@ -246,6 +250,7 @@ function card() {
         startDate: cardData.startDate,
         endDate: cardData.endDate,
         isComplete: cardData.isComplete,
+        sentence: cardData.sentence,
       }
 
       Object.keys(newVal).forEach(function(key) {
