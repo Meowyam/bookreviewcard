@@ -109,6 +109,8 @@ function dateSplit(bookDate,x,y1,y2) {
 
 let allGenres = [
   '',
+  'Fashion',
+  'Cities',
   'Philosophy',
   'Ecology',
   'Travel',
