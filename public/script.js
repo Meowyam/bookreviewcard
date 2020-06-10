@@ -1,6 +1,6 @@
 function loadCard() {
   if (sessionStorage.length == 0) {
-    let emptyCard = {
+    return {
       title: '',
       author: '',
       genre1: '',
@@ -11,12 +11,10 @@ function loadCard() {
       isComplete: '',
       sentence: '',
     }
-    return emptyCard
   } else {
-    return savedCard =  JSON.parse(sessionStorage.getItem('card'))
+    return JSON.parse(sessionStorage.getItem('card'))
   }
 }
-loadCard()
 let cardData = loadCard()
 
 const c = document.getElementById("cardCanvas")
@@ -24,7 +22,7 @@ const c = document.getElementById("cardCanvas")
 const ctx = c.getContext("2d")
 
 function getCardImage() {
-  const reviewCard = c.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream")
+  const reviewCard = c.toDataURL("image/png", 1.0)
   document.getElementById("download").setAttribute("href", reviewCard)
 }
 
@@ -107,7 +105,7 @@ function dateSplit(bookDate,x,y1,y2) {
   ctx.fillText(dateArray[1],x,y2)
 }
 
-let allGenres = [
+const allGenres = [
   '',
   'Fashion',
   'Cities',
