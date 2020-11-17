@@ -20,7 +20,7 @@
   "homepage": "https://github.com/meowyam/bookreviewcard#readme",
   "dependencies": {
     "autoprefixer": "^9.7.6",
-    "fastify": "^2.14.0",
+    "fastify": "^2.15.1",
     "fastify-static": "^2.7.0",
     "pikaday": "^1.8.0",
     "postcss-cli": "^7.1.1",
